@@ -1,0 +1,15 @@
+.idea/
+__pycache__/
+venv/
+.env
+tests/
+dump.rdb
+project_data
+RptSer
+redis-5.0.5/
+app.db
+madblog.log*
+migrations/
+*log
+# Unit test / coverage reports
+tmp/
