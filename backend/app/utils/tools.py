@@ -95,7 +95,7 @@ class FilePath(object):
 
 
     def get_word2pdf_java_path(self):
-        path = os.path.join(self._pwd, 'app/rpt/bin/word2pdf_index.jar')
+        path = os.path.join(self._pwd, 'backend/app/rpt/bin/word2pdf_index.jar')
         if not os.path.isfile(path):
             logger.warning('File not exist: {}'.format(path))
         logger.info('Java script which convert MS-word to pdf and update TOC path:\n{}'.format(path))
