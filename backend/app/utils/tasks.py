@@ -160,12 +160,13 @@ def export_posts(*args, **kwargs):
 
 
 #@celery.task()
-@celery.task(bind=True)
-def generate_report(self,mainName,id, channel_code):
+# @celery.task(bind=True)
+# def generate_report(self,mainName,id, channel_code):
+def generate_report(mainName,id, channel_code):
     from app import create_app
     app = create_app()
     with app.app_context():
-        self.update_state(state='RUNNING')
+        # self.update_state(state='RUNNING')
         order = db_dic[mainName].query.get_or_404(id)
         client_snp = {i.rs:i.gt for i in order.updata.gtinfo.all()}
         client_info = (order.to_dict())
@@ -179,13 +180,14 @@ def generate_report(self,mainName,id, channel_code):
         order.pdf_path = ins.pdf_path
         db.session.commit()
 
-@celery.task(bind=True)
-def add_together(self,x,y):
+# @celery.task(bind=True)
+# def add_together(self,x,y):
+def add_together(x,y):
     #time.sleep(10) 
     for i in range(10):
         time.sleep(1)
         #self.update_state(state='RUNNING')
-        self.update_state(state=f'-----------{i}')
+        # self.update_state(state=f'-----------{i}')
     result = x+y
     print(result)
     return result

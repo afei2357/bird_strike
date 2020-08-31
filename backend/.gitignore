@@ -13,3 +13,5 @@ migrations/
 *log
 # Unit test / coverage reports
 tmp/
+dist/
+build/

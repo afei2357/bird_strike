@@ -8,8 +8,8 @@ from flask import Flask, request
 from app.extensions import cors, db, migrate, mail, babel
 from config import Config
 
-from celery import Celery
-celery = Celery(__name__,backend=Config.CELERY_BACKEND,broker=Config.CELERY_BROKER)
+# from celery import Celery
+# celery = Celery(__name__,backend=Config.CELERY_BACKEND,broker=Config.CELERY_BROKER)
 
 def create_app(config_class=Config):
     '''Factory Pattern: Create Flask app.'''
@@ -27,7 +27,7 @@ def create_app(config_class=Config):
     configure_after_handlers(app)
     configure_errorhandlers(app)
 
-    celery.conf.update(app.config)
+    # celery.conf.update(app.config)
     return app
 
 

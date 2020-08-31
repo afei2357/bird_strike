@@ -5,7 +5,7 @@ from app.api import bp
 from app.api.auth import token_auth
 from flask_babel import gettext as _
 from app.api.errors import error_response
-from app.models import Permission
+##from app.models import Permission
 from app.models1 import OrderMed, UpData, Products
 from app.extensions import db
 from app.rpt.tasks import generate_report
@@ -222,7 +222,8 @@ def getDownLoad(id, flag):
 def job_run_order(id):
     ###celery之前
     ## 加入celery后
-    task = generate_report.delay(id)
+    # task = generate_report.delay(id)
+    generate_report(id)
     ##task = generate_report(mainName,id)
     order = OrderMed.query.get_or_404(id)
     if order:
