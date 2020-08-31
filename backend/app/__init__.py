@@ -1,11 +1,12 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import os
-from elasticsearch import Elasticsearch
-from redis import Redis
-import rq
+# from elasticsearch import Elasticsearch
+# from redis import Redis
+# import rq
 from flask import Flask, request
-from app.extensions import cors, db, migrate, mail, babel
+#from app.extensions import cors, db, migrate, mail, babel
+from app.extensions import cors, db,   babel
 from config import Config
 
 # from celery import Celery
@@ -36,11 +37,11 @@ def configure_app(app, config_class):
     # 不检查路由中最后是否有斜杠/
     app.url_map.strict_slashes = False
     # 整合RQ任务队列
-    app.redis = Redis.from_url(app.config['REDIS_URL'])
-    app.task_queue = rq.Queue('madblog-tasks', connection=app.redis, default_timeout=3600)  # 设置任务队列中各任务的执行最大超时时间为 1 小时
+    # app.redis = Redis.from_url(app.config['REDIS_URL'])
+    # app.task_queue = rq.Queue('madblog-tasks', connection=app.redis, default_timeout=3600)  # 设置任务队列中各任务的执行最大超时时间为 1 小时
     # Elasticsearch全文检索
-    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
-        if app.config['ELASTICSEARCH_URL'] else None
+    # app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        # if app.config['ELASTICSEARCH_URL'] else None
 
 
 def configure_blueprints(app):
@@ -58,9 +59,9 @@ def configure_extensions(app):
     # Init Flask-SQLAlchemy
     db.init_app(app)
     # Init Flask-Migrate
-    migrate.init_app(app, db)
+    # migrate.init_app(app, db)
     # Init Flask-Mail
-    mail.init_app(app)
+    # mail.init_app(app)
     # Init Flask-Babel
     babel.init_app(app)
 

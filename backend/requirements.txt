@@ -44,7 +44,6 @@ MarkupSafe==1.0
 mccabe==0.6.1
 mysql-connector-python==8.0.19
 mysqlclient==1.4.6
-numpy==1.18.1
 Pillow==7.0.0
 protobuf==3.6.1
 pycodestyle==2.5.0
@@ -64,7 +63,6 @@ redis==3.2.1
 requests==2.20.0
 rq==1.0
 rq-dashboard==0.4.0
-scipy==1.4.1
 six==1.11.0
 SQLAlchemy==1.2.13
 tornado==5.1.1

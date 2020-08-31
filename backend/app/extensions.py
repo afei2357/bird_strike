@@ -3,9 +3,9 @@
 ''' Create instance of these flask extensions '''
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 from sqlalchemy import MetaData
-from flask_mail import Mail
+# from flask_mail import Mail
 from flask_babel import Babel
 
 # Flask-Cors plugin
@@ -20,8 +20,8 @@ naming_convention = {
 }
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 # Flask-Migrate plugin
-migrate = Migrate(render_as_batch=True)
+# migrate = Migrate(render_as_batch=True)
 # Flask-Mail plugin
-mail = Mail()
+# mail = Mail()
 # Flask-Babel plugin
 babel = Babel()

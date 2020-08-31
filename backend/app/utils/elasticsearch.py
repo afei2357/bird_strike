@@ -1,6 +1,6 @@
 import re
 from flask import current_app
-from elasticsearch.exceptions import NotFoundError
+# from elasticsearch.exceptions import NotFoundError
 
 
 def add_to_index(index, obj):
