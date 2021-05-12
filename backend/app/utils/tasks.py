@@ -4,12 +4,12 @@ import os
 import time
 from datetime import datetime
 import celery 
-from rq import get_current_job
+# from rq import get_current_job
 from app.extensions import db
 from app.models import User, Post, Message, Task
 from app.utils.email import send_email
 from config import Config,db_dic
-from app.utils.reporter  import RunInfo 
+# from app.utils.reporter  import RunInfo 
 
 
 # RQ worker 在我们的博客Flask应用之外运行，所以需要创建自己的应用实例
@@ -28,7 +28,8 @@ def test_rq(num):
 
 
 def _set_task_progress(progress):
-    job = get_current_job()  # 当前后台任务
+    # job = get_current_job()  # 当前后台任务
+    job = None
     if job:
         job.meta['progress'] = progress
         job.save_meta()
@@ -160,13 +161,13 @@ def export_posts(*args, **kwargs):
 
 
 #@celery.task()
-# @celery.task(bind=True)
-# def generate_report(self,mainName,id, channel_code):
-def generate_report(mainName,id, channel_code):
+@celery.task(bind=True)
+def generate_report(self,mainName,id, channel_code):
+# def generate_report(mainName,id, channel_code):
     from app import create_app
     app = create_app()
     with app.app_context():
-        # self.update_state(state='RUNNING')
+        self.update_state(state='RUNNING')
         order = db_dic[mainName].query.get_or_404(id)
         client_snp = {i.rs:i.gt for i in order.updata.gtinfo.all()}
         client_info = (order.to_dict())
@@ -174,19 +175,21 @@ def generate_report(mainName,id, channel_code):
         outdir = "project_data/results/%s/%s"%(channel_code, datetime.now().strftime("%Y%m%d"))
         if not os.path.exists(outdir):
             os.makedirs(outdir)
-        ins = RunInfo(client_info, client_snp, outdir)
+        # todo 生成报告的代码：暂时注释掉
+        # ins = RunInfo(client_info, client_snp, outdir)
+        ins = None
         order.report_date = datetime.now()
         order.docx_path = ins.docx_path
         order.pdf_path = ins.pdf_path
         db.session.commit()
 
-# @celery.task(bind=True)
-# def add_together(self,x,y):
-def add_together(x,y):
+@celery.task(bind=True)
+def add_together(self,x,y):
+# def add_together(x,y):
     #time.sleep(10) 
-    for i in range(10):
+    for i in range(5):
         time.sleep(1)
-        #self.update_state(state='RUNNING')
+        self.update_state(state='RUNNING')
         # self.update_state(state=f'-----------{i}')
     result = x+y
     print(result)

@@ -1,5 +1,5 @@
 #from app import create_app
-from app  import create_app,db#,celery
+from app  import create_app,db,celery
 app = create_app()
 app.debug = True
 
