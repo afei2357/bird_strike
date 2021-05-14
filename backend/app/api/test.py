@@ -35,7 +35,7 @@ def test_celery1(task_id):
 
     task = add_together.AsyncResult(task_id)
     print(task.state)
-    #print(task.info)
+    print(task.info)
     print(task)
     print(task.backend)
     #print(task.info.get('current',0))
