@@ -17,29 +17,30 @@ executor = ThreadPoolExecutor(1)
 @bp.route('/test_celery')
 #@auth.login_required
 def test_celery():
-    print('================ get test2 begin ================')
-    result =add_together.delay(23,23)
+    print('================ get test1 begin ================')
+    result =add_together.delay(3,3)
 
     print(current_app)
-    with current_app.app_context():
-        print('22222222222')
-    print('================ get test2 end  ================')
+    #with current_app.app_context():
+    #    print('22222222222')
+    print('================ get test1 end  ================')
     return 'this test2  is the backend !! ,the id is :\n'+str(result.id)+'\n'
 
 #@bp.route('/status/<task_id>')
 @bp.route('/test_celery/<task_id>')
 #@auth.login_required
 def test_celery1(task_id):
-    print('================ get test2 begin ================')
+    print('================ get test3 begin ================')
     #add_together.delay(23,23)
 
     task = add_together.AsyncResult(task_id)
     print(task.state)
     print(task.info)
+    print(task)
     print(task.backend)
     #print(task.info.get('current',0))
     #print(task.info.get('total',1))
-    print('================ get test2 end  ================')
+    print('================ get test3 end  ================')
     return 'task.state\n'#+str(result)
 
 @bp.route('/report/<task_id>')
