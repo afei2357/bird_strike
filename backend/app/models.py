@@ -293,6 +293,7 @@ class User(PaginatedAPIMixin, db.Model):
     orders_health = db.relationship('OrderHlth', backref='owner', lazy='dynamic')
     ## orders_genetic = db.relationship('OrderGnic', backref='owner', lazy='dynamic')
     orders_medicine = db.relationship('OrderMed', backref='owner', lazy='dynamic')
+    orders_seq = db.relationship('OrderSeq', backref='owner', lazy='dynamic')
 
     ## 关联数据
     updatas = db.relationship('UpData', backref='owner', lazy='dynamic')   

@@ -69,7 +69,10 @@ class Channel(PaginatedAPIMixin, db.Model):
     updata = db.relationship('UpData', backref='channel', lazy='dynamic')
     upcover = db.relationship('Upcover', backref='channel', lazy='dynamic')
     pkcolor = db.relationship('Pkcolor', backref='channel', lazy='dynamic')
-
+    def __init__(self,code,name):
+        self.code = code
+        self.name = name
+        
     def to_dict(self):
         columns = self.__table__.columns.keys()
         result = {}
@@ -298,6 +301,54 @@ class OrderGnic(PaginatedAPIMixin, db.Model):
             if field in data:
                 setattr(self, field, data[field])  
 
+class SeqData(PaginatedAPIMixin, db.Model):
+    __tablename__ = 'seqData'
+    id = db.Column(db.Integer, primary_key=True)
+    path = db.Column(db.String(64)) # 下机数据的路径 
+    gene = db.Column(db.String(10))     # 基因
+    FR = db.Column(db.String(64))      #测序是正向或者反向
+    date = db.Column(db.DateTime)     # 日期
+    info = db.Column(db.String(100))    # 
+    raw_data = db.Column(db.String(2000)) # 保存原始测序数据
+
+    order_seq = db.relationship('OrderSeq')
+    order_id = db.Column(db.Integer, db.ForeignKey('order_sequence.id'))
+    def __init__(self,path,gene,FR,date,info):
+        self.path= path
+        self.gene = gene
+        self.FR = FR
+        self.date = date
+        self.info  = info
+        
+
+class OrderSeq(PaginatedAPIMixin, db.Model):
+    __tablename__ = 'order_sequence'
+    id = db.Column(db.Integer, primary_key=True)
+    order_num = db.Column(db.String(64)) # 订单号 
+    customer_code = db.Column(db.String(64))      #客户编码
+    name = db.Column(db.String(64))     # 姓名
+    phone = db.Column(db.String(30))     # 手机号
+    sample_class = db.Column(db.String(100))     # 样品类型
+    create_time = db.Column(db.DateTime)      # 录入时间
+    sample_date = db.Column(db.DateTime)      # 采样时间
+    receive_date = db.Column(db.DateTime)      # 到样时间
+    report_date = db.Column(db.DateTime)  # 报告时间
+    ## detection_items = db.Column(db.String(100)) #检测项目
+    pdf_path = db.Column(db.String(64)) # pdf结果路径
+    docx_path = db.Column(db.String(64)) #docx结果路径
+    jobstate = db.Column(db.String(64))  #任务运行状态
+    orderstate = db.Column(db.String(64))  #订单状态
+    sample_code = db.Column(db.String(64)) # 样品编码
+    ### 该订单的用户
+
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    seqData = db.relationship('SeqData')
+    def __init__(self,order_num,sample_date):
+        self.order_num = order_num
+        self.sample_date = sample_date
+        
+        
+        
 class OrderMed(PaginatedAPIMixin, db.Model):
     __tablename__ = 'order_medicine'
     id = db.Column(db.Integer, primary_key=True)
