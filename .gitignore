@@ -35,4 +35,6 @@ metabolism/
 genotype.txt
 chr_pos_4.db
 chr_pos.db
+.ipynb_checkpoints/
+backend/bird_strike
 
