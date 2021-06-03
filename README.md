@@ -1,5 +1,4 @@
-# DrugRptOnline
-Drug gene interpretation and report
+# 飞机场鸟击项目 
 各个机场代码如下,其中山东临沂机场没有代码，而南宁吴圩国际机场和上海浦东国际机场有两个，在存数据库时用其中一个:
 ```
 ZYTL    大连周水子国际机场
