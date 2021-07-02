@@ -428,10 +428,15 @@ class OrderSeq(PaginatedAPIMixin, db.Model):
     conclusion          = db.Column(db.String(30)) #
     customer_code = db.Column(db.String(64))      #客户编码
     sample_class = db.Column(db.String(100))     # 样品类型
-    create_time = db.Column(db.DateTime)      # 录入时间
-    sample_date = db.Column(db.DateTime)      # 采样时间
-    receive_date = db.Column(db.DateTime)      # 到样时间
-    report_date = db.Column(db.DateTime)  # 报告时间
+    #create_time = db.Column(db.DateTime)      # 录入时间
+    #sample_date = db.Column(db.DateTime)      # 采样时间
+    #receive_date = db.Column(db.DateTime)      # 到样时间
+    #report_date = db.Column(db.DateTime)  # 报告时间
+
+    create_time = db.Column(db.String(30))      # 录入时间
+    sample_date = db.Column(db.String(30))      # 采样时间
+    receive_date =db.Column(db.String(30))      # 到样时间
+    report_date = db.Column(db.String(30))  # 报告时间
     ## detection_items = db.Column(db.String(100)) #检测项目
     pdf_path = db.Column(db.String(64)) # pdf结果路径
     docx_path = db.Column(db.String(64)) #docx结果路径
@@ -515,7 +520,8 @@ class SeqData(PaginatedAPIMixin, db.Model):
     path = db.Column(db.String(64)) # 下机数据的路径 
     gene = db.Column(db.String(10))     # 基因
     FR = db.Column(db.String(64))      #测序是正向或者反向
-    date = db.Column(db.DateTime)     # 日期
+    #date = db.Column(db.DateTime)     # 日期
+    date = db.Column(db.String(64))     # 日期
     info = db.Column(db.String(100))    # 
     raw_data = db.Column(db.String(2000)) # 保存原始测序数据
 
@@ -531,6 +537,7 @@ class SeqData(PaginatedAPIMixin, db.Model):
 
     def from_dict(self, data):
         columns = self.__table__.columns.keys()
+        columns.remove('id')
         for field in columns:
             if field in data:
                 setattr(self, field, data[field])

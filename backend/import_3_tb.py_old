@@ -148,7 +148,7 @@ path_df = pd.read_csv('airport.csv',header=0,sep=',')
 
 # In[22]:
 
-path_df.head
+# path_df.head
 
 
 # In[23]:
@@ -161,40 +161,36 @@ result_df_event_flight = pd.merge(order_df,path_df,left_on=['event_flight'],righ
 
 result_df.to_csv('result_df.tsv',encoding='utf_8_sig',index=False)
 result_df_event_flight.to_csv('result_df_event_flight.tsv',encoding='utf_8_sig',index=False)
+#result_df['id'] = result_df['id'].apply(lambda x : int(x))
 
 
 # In[25]:
-
-result_df
-
-
-# In[26]:
 
 s = 'ZBAD2021-加急1'
 s.replace('加急','jiaji')
 
 
-# In[27]:
+# In[26]:
 
 # s
 
 
-# In[28]:
+# In[27]:
 
 # order_df.iloc[[1849,1850],:]
 
 
-# In[29]:
+# In[28]:
 
 print('--')
 
 
+# In[29]:
+
+# delivery_df['event_flight']
+
+
 # In[30]:
-
-result_df.path
-
-
-# In[31]:
 
 from app import create_app
 app = create_app()
@@ -208,63 +204,31 @@ from app.models import *
 import random
 from datetime import datetime
 
-
-# In[32]:
-
-
-result_df['id'] = result_df['id'].apply(lambda x : int(x) if not pd.isnull(x) else 0)
 # 导入数据库
 
 
-# In[33]:
-
-# result_df['create_time'] = pd.to_datetime(result_df['create_time'],infer_datetime_format=True )
-# result_df['sample_date'] = pd.to_datetime(result_df['sample_date'],infer_datetime_format=True )
-# result_df['receive_date'] = pd.to_datetime(result_df['receive_date'],infer_datetime_format=True )
-# result_df['report_date'] = pd.to_datetime(result_df['report_date'],infer_datetime_format=True )
-# print(type(result_df['order_date']))
-# result_df['id'] = result_df['id'].apply(lambda x :  int(x)  if x else None  )
-# result_df['id'] = result_df['id'].astype('int64')
-# print(result_df.id )
-
-print(result_df['id'])
-
-
-# In[ ]:
-
-
-
-
-# In[34]:
+# In[31]:
 
 old_id = None
 i = 0
 for ix,val in result_df.iterrows():
     data = val.to_dict()
     id =  data.get('id')
-    if not id :
-        continue   
+    if not id:
+        break
+    if old_id == id: # 说明上一行已经保存过了，只需要将测序记录联系在这个订单上即可
+        o = OrderSeq.query.filter_by(id=id).first()
+#         pass
     else:
-#         print(val.get('id'))        
-        
         o = OrderSeq()
         o.from_dict(data)
-#         print(o.id)
-#         print(data.get('id'))
         db.session.add(o)
-        
-    if val.get('path') and not pd.isnull(val.get('path')):
-        seqData = SeqData()
-        seqData.from_dict(data)
- 
-        with open (val.get('path')) as fh:
-            raw_data = fh.read()
-            seqData.raw_data = raw_data 
-            
-        o.seqData.append(seqData)
-        db.session.add(seqData)
+    seqData = SeqData()
+    seqData.from_dict(data)
+    o.seqData.append( seqData)
+    db.session.add(seqData)
     
-#     old_id = data.get('id')
+    old_id = data.get('id')
     
     i+= 1
     if i%100 == 0:
@@ -272,25 +236,12 @@ for ix,val in result_df.iterrows():
         
 db.session.commit()
 print('finish ')
-app_context.pop()        
-        
-
+app_context.pop()
 
 
 # In[ ]:
 
 # OrderSeq.__table__.columns.keys()
-
-
-# In[ ]:
-
-l = [1,2,3]
-l
-
-
-# In[ ]:
-
-db.session.rollback()
 
 
 # In[ ]:
