@@ -447,8 +447,8 @@ class OrderSeq(PaginatedAPIMixin, db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     delivery = db.relationship('Delivery')
-    DNA_info = db.relationship('DNAInfo',backref=db.backref('order_seq'))
-    seqData = db.relationship('SeqData')
+    #DNA_info = db.relationship('DNAInfo',backref=db.backref('order_seq'))
+    #seqData = db.relationship('SeqData')
 
     #def __init__(self,order_num,sample_date):
     #    self.order_num = order_num
@@ -470,8 +470,10 @@ class DNAInfo(PaginatedAPIMixin, db.Model):
     OD260_OD230     = db.Column(db.String(30)) #
     OD260_OD280     = db.Column(db.String(30)) #
     extraction_date = db.Column(db.String(30)) #
-    orderSeq_id = db.Column(db.Integer, db.ForeignKey('order_seq.id'))
-    orderSeq = db.relationship('OrderSeq')
+
+    # 一个样品可能会对几个基因测序,所欲Delivery与SeqData是一对多关系
+    delivery = db.relationship('Delivery')
+    delivery_id = db.Column(db.Integer, db.ForeignKey('delivery.id'))
 
     #def __init__(self):
     #    pass
@@ -503,30 +505,42 @@ class Delivery(PaginatedAPIMixin, db.Model):
     receive_date          = db.Column(db.String(30)) #
     remarks               = db.Column(db.String(100)) #
     delivery_num          = db.Column(db.String(30)) #
+
+    # 一个订单可能有各个样品,所欲Order_seq与Delivery是一对多关系
     orderSeq_id = db.Column(db.Integer, db.ForeignKey('order_seq.id'))
     orderSeq = db.relationship('OrderSeq')
     #def __init__(self):
     #    pass
-        
+
+    # 一个样品可能会对几个基因测序,所欲Delivery与SeqData是一对多关系
+    seqData = db.relationship('SeqData')
+    DNA_Info = db.relationship('DNAInfo')
+
     def from_dict(self, data):
         columns = self.__table__.columns.keys()
         for field in columns:
             if field in data:
                 setattr(self, field, data[field])
 
+
 class SeqData(PaginatedAPIMixin, db.Model):
     __tablename__ = 'seqData'
     id = db.Column(db.Integer, primary_key=True)
-    path = db.Column(db.String(64)) # 下机数据的路径 
-    gene = db.Column(db.String(10))     # 基因
+    data_num = db.Column(db.String(64)) 
+    path = db.Column(db.String(100)) # 下机数据的路径 
+    gene_name = db.Column(db.String(10))     # 基因
     FR = db.Column(db.String(64))      #测序是正向或者反向
     #date = db.Column(db.DateTime)     # 日期
     date = db.Column(db.String(64))     # 日期
     info = db.Column(db.String(100))    # 
     raw_data = db.Column(db.String(2000)) # 保存原始测序数据
+    creation_time = db.Column(db.String(64))
+    update_time = db.Column(db.String(64))
+    delete_at = db.Column(db.DateTime)    # 删除日期
 
-    order_seq = db.relationship('OrderSeq')
-    orderSeq_id = db.Column(db.Integer, db.ForeignKey('order_seq.id'))
+    # 一个样品可能会对几个基因测序,所欲Delivery与SeqData是一对多关系
+    delivery = db.relationship('Delivery')
+    delivery_id = db.Column(db.Integer, db.ForeignKey('delivery.id'))
 
     #def __init__(self,path,gene,FR,date,info):
     #    self.path= path

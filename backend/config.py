@@ -17,7 +17,7 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI =  \
         'sqlite:///' + os.path.join(basedir, 'app.db') or \
-        'mysql://root:reo123@localhost:3306/GeneticRptOnline?charset=utf8' or \
+        'mysql://root:reo123@localhost:3306/BirdRptOnline?charset=utf8' or \
         os.environ.get('DATABASE_URL') 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # 日志输出到控制台还是日志文件中
