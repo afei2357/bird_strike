@@ -527,7 +527,7 @@ class SeqData(PaginatedAPIMixin, db.Model):
     __tablename__ = 'seqData'
     id = db.Column(db.Integer, primary_key=True)
     data_num = db.Column(db.String(64)) 
-    path = db.Column(db.String(100)) # 下机数据的路径 
+    path = db.Column(db.String(200)) # 下机数据的路径 
     gene_name = db.Column(db.String(10))     # 基因
     FR = db.Column(db.String(64))      #测序是正向或者反向
     #date = db.Column(db.DateTime)     # 日期
