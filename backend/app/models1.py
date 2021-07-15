@@ -422,9 +422,9 @@ class OrderSeq(PaginatedAPIMixin, db.Model):
     sample_code         = db.Column(db.String(30)) #
     detection_items     = db.Column(db.String(30)) #
     department          = db.Column(db.String(30)) #
-    order_date          = db.Column(db.String(30)) #
+    order_date          = db.Column(db.DateTime) #
     order_num           = db.Column(db.String(30)) # 订单号
-    report_date         = db.Column(db.String(30)) #
+    report_date         = db.Column(db.DateTime) #
     conclusion          = db.Column(db.String(30)) #
     customer_code = db.Column(db.String(64))      #客户编码
     sample_class = db.Column(db.String(100))     # 样品类型
@@ -433,10 +433,10 @@ class OrderSeq(PaginatedAPIMixin, db.Model):
     #receive_date = db.Column(db.DateTime)      # 到样时间
     #report_date = db.Column(db.DateTime)  # 报告时间
 
-    create_time = db.Column(db.String(30))      # 录入时间
-    sample_date = db.Column(db.String(30))      # 采样时间
-    receive_date =db.Column(db.String(30))      # 到样时间
-    report_date = db.Column(db.String(30))  # 报告时间
+    create_time = db.Column(db.DateTime)      # 录入时间
+    sample_date = db.Column(db.DateTime)      # 采样时间
+    receive_date =db.Column(db.DateTime)      # 到样时间
+    report_date = db.Column(db.DateTime)  # 报告时间
     ## detection_items = db.Column(db.String(100)) #检测项目
     pdf_path = db.Column(db.String(64)) # pdf结果路径
     docx_path = db.Column(db.String(64)) #docx结果路径
@@ -469,7 +469,7 @@ class DNAInfo(PaginatedAPIMixin, db.Model):
     quantity        = db.Column(db.String(30)) #
     OD260_OD230     = db.Column(db.String(30)) #
     OD260_OD280     = db.Column(db.String(30)) #
-    extraction_date = db.Column(db.String(30)) #
+    extraction_date = db.Column(db.DateTime) #
 
     # 一个样品可能会对几个基因测序,所欲Delivery与SeqData是一对多关系
     delivery = db.relationship('Delivery')
@@ -490,7 +490,7 @@ class Delivery(PaginatedAPIMixin, db.Model):
     sample_code           = db.Column(db.String(30)) #
     event_flight          = db.Column(db.String(30)) #
     event_describe        = db.Column(db.String(200)) #
-    event_date            = db.Column(db.String(30)) #
+    event_date            = db.Column(db.DateTime) #
     event_date_region     = db.Column(db.String(30)) #
     sample_person         = db.Column(db.String(30)) #
     event_place           = db.Column(db.String(30)) #
@@ -499,10 +499,10 @@ class Delivery(PaginatedAPIMixin, db.Model):
     sample_status         = db.Column(db.String(30)) #
     delivery_person       = db.Column(db.String(30)) #
     delivery_person_phone = db.Column(db.String(30)) #
-    delivery_date         = db.Column(db.String(30)) #
+    delivery_date         = db.Column(db.DateTime) #
     express_company       = db.Column(db.String(30)) #
     express_num           = db.Column(db.String(30)) #
-    receive_date          = db.Column(db.String(30)) #
+    receive_date          = db.Column(db.DateTime) #
     remarks               = db.Column(db.String(100)) #
     delivery_num          = db.Column(db.String(30)) #
 
@@ -532,11 +532,11 @@ class SeqData(PaginatedAPIMixin, db.Model):
     gene_name = db.Column(db.String(10))     # 基因
     FR = db.Column(db.String(64))      #测序是正向或者反向
     #date = db.Column(db.DateTime)     # 日期
-    date = db.Column(db.String(64))     # 日期
+    date = db.Column(db.DateTime)     # 日期
     info = db.Column(db.String(100))    # 
     raw_data = db.Column(db.String(2000)) # 保存原始测序数据
-    creation_time = db.Column(db.String(64))
-    update_time = db.Column(db.String(64))
+    creation_time = db.Column(db.DateTime)
+    update_time = db.Column(db.DateTime)
     delete_at = db.Column(db.DateTime)    # 删除日期
 
     # 一个样品可能会对几个基因测序,所欲Delivery与SeqData是一对多关系
