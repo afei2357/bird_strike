@@ -556,3 +556,64 @@ class SeqData(PaginatedAPIMixin, db.Model):
         for field in columns:
             if field in data:
                 setattr(self, field, data[field])
+
+class PreventiveSuggestions(PaginatedAPIMixin, db.Model):
+    __tablename__ = 'preventive_suggestions'
+    id = db.Column(db.Integer, primary_key=True)
+    Chinese_name              = db.Column(db.String(30)) #    中文名      
+    common_name               = db.Column(db.String(30)) #    俗名
+    ecological_group          = db.Column(db.String(30)) #    生态类群
+    preventive_measures       = db.Column(db.String(300)) #    防范措施
+    English_name              = db.Column(db.String(60)) #    英文名
+    Latin_genus               = db.Column(db.String(30)) #    拉丁属
+    Latin_species             = db.Column(db.String(30)) #    拉丁种
+    body_length               = db.Column(db.String(30)) #    体长
+    weight                    = db.Column(db.String(30)) #    体重
+    common_in_region          = db.Column(db.String(300)) #    地区常见
+    uncommon_in_region        = db.Column(db.String(300)) #    地区不常见
+    body_shape                = db.Column(db.String(30)) #    体形
+    body_shape                = db.Column(db.String(30)) #    体型
+    habitat                   = db.Column(db.String(100)) #    栖息地
+    main_color                = db.Column(db.String(30)) #    主色
+    secondary_color           = db.Column(db.String(30)) #    次色r
+    beak_type                 = db.Column(db.String(30)) #    喙型
+    beak_length               = db.Column(db.String(30)) #    喙长
+    head_type                 = db.Column(db.String(30)) #    头型
+    singing                   = db.Column(db.String(60)) #    鸣唱
+    singing_type              = db.Column(db.String(30)) #    鸣唱型
+    wing_type                 = db.Column(db.String(30)) #    翅型
+    flying_type               = db.Column(db.String(30)) #    飞行类型
+    tail_shape                = db.Column(db.String(30)) #    尾形
+    leg_color                 = db.Column(db.String(30)) #    腿色
+    chest_type                = db.Column(db.String(30)) #    胸型
+    abdomen_type              = db.Column(db.String(30)) #    腹型
+    back_type                 = db.Column(db.String(30)) #    背型
+    head_color                = db.Column(db.String(30)) #    头顶色
+    forehead_color            = db.Column(db.String(30)) #    额色
+    wax_film_color            = db.Column(db.String(30)) #    蜡膜色
+    throat_color              = db.Column(db.String(30)) #    喉色
+    back_neck_color           = db.Column(db.String(30)) #    后颈色
+    eye_color                 = db.Column(db.String(30)) #    眼色
+    ear_feather_cluster       = db.Column(db.String(30)) #    耳羽簇
+    ventral                   = db.Column(db.String(100)) #    腹侧
+    dorsal                    = db.Column(db.String(60)) #    背侧
+    flight_type_details       = db.Column(db.String(100)) #    飞行类型详情
+    Wingspan_range            = db.Column(db.String(30)) #    翼展范围
+    tail_type                 = db.Column(db.String(100)) #    尾型
+    ventral_tail_feather      = db.Column(db.String(30)) #    腹侧尾羽
+    dorsal_tail_feather       = db.Column(db.String(60)) #    背侧尾羽
+    distribution_range_habitat= db.Column(db.String(300)) #    分布范围及栖息地
+    feeding_habits            = db.Column(db.String(300)) #    食性
+    singing                   = db.Column(db.String(100)) #    鸣声
+    breeding_ground           = db.Column(db.String(60)) #    繁殖地
+    egg_color                 = db.Column(db.String(60)) #    卵色
+    nest_material             = db.Column(db.String(30)) #    巢材
+    details                   = db.Column(db.String(100)) #    详情
+    overview                  = db.Column(db.String(500)) #    概述
+    nesting_and_breeding      = db.Column(db.String(100)) #    筑巢与繁殖
+    similar_species           = db.Column(db.String(100)) #    近似种s
+    breeding_type             = db.Column(db.String(30)) #    繁殖类型
+    hatching                  = db.Column(db.String(30)) #    孵卵
+    migration                 = db.Column(db.String(30)) #    迁徙
+    picture_author_source     = db.Column(db.String(30)) #    图片及作者、出处
+    singing_source            = db.Column(db.String(30)) #    鸣声及出处
